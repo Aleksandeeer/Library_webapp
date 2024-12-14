@@ -6,16 +6,18 @@ import org.example.models.Library_worker;
 import org.example.models.Loan;
 import org.example.models.Member;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Getter
 public class Service {
-    @Getter List<Book> books;
-    @Getter List<Member> members;
-    @Getter List<Library_worker> library_workers;
-    @Getter List<Loan> loans;
+    List<Book> books;
+    List<Member> members;
+    List<Library_worker> library_workers;
+    List<Loan> loans;
 
     Session session;
 
@@ -37,7 +39,33 @@ public class Service {
         }
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public void addBook(Book book) {
+        books.add(book);
+
+        // Открытие сессии
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        // Транзакция для сохранения объекта
+        Transaction transaction = null;
+
+        try {
+            // Начинаем транзакцию
+            transaction = session.beginTransaction();
+
+            // Сохранение книги в базе
+            session.save(book);
+
+            // Подтверждаем транзакцию
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                // Если ошибка, откатываем транзакцию
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            // Закрываем сессию
+            session.close();
+        }
     }
 }

@@ -8,17 +8,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Getter @Setter
 public class Book {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) int id;
-    @Getter @Setter String author;
-    @Getter @Setter Genre genre;
-    @Getter @Setter String title;
-    @Getter @Setter int publication_year;
+    String author;
+    Genre genre;
+    String title;
+    int publication_year;
     /// ISBN
     /// 111-5-22222-333-4
     /// 111-prefix, 5-код страны, 22222-код издательства, 333-номер книги в издательстве, 4-контрольная цифра
-    @Getter @Setter String ISBN;
-    @Getter @Setter boolean availabilityStatus;
+    String ISBN;
+    boolean availabilityStatus;
 
     public enum Genre {
         FANTASY, ACTION, COMEDY, DRAMA, DETECTIVE, NOVEL, SCIENCE, TUTORIAL
