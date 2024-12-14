@@ -1,0 +1,31 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- PostgreSQL: URL, пользователь и пароль -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+
+        <!-- TODO: ВНИМАТЕЛЬНО ЗДЕСЬ С URL (пока работает) !!! -->
+        <property name="hibernate.connection.url">jdbc:postgresql://[::1]:5432/postgres</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">cricut760</property>
+
+        <!-- Диалект Hibernate для PostgreSQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Автоматическое управление схемой -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Логирование -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- TODO: маппинги для классов -->
+        <mapping class="org.example.models.Book"/>
+        <mapping class="org.example.models.Loan"/>
+        <mapping class="org.example.models.Member"/>
+        <mapping class="org.example.models.Library_worker"/>
+    </session-factory>
+</hibernate-configuration>
