@@ -1,6 +1,7 @@
 package org.example.services;
 
 import lombok.Getter;
+import org.example.components.HibernateUtil;
 import org.example.models.Book;
 import org.example.models.Library_worker;
 import org.example.models.Loan;
@@ -8,7 +9,6 @@ import org.example.models.Member;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -18,15 +18,15 @@ public class Service {
     List<Member> members;
     List<Library_worker> library_workers;
     List<Loan> loans;
+    int role = 0; // ? 0 - Гость, 1 - Читатель, 2 - Работник
 
     Session session;
 
     public Service() {
-        // Открытие сессии
         session = HibernateUtil.getSessionFactory().openSession();
 
         try {
-            // Попытка выгрузки данных из таблицы
+            // Выгрузки данных из таблиц
             books = session.createQuery("FROM Book", Book.class).list();
             members = session.createQuery("FROM Member", Member.class).list();
             library_workers = session.createQuery("FROM Library_worker", Library_worker.class).list();
@@ -42,29 +42,18 @@ public class Service {
     public void addBook(Book book) {
         books.add(book);
 
-        // Открытие сессии
         session = HibernateUtil.getSessionFactory().openSession();
-
-        // Транзакция для сохранения объекта
         Transaction transaction = null;
 
         try {
-            // Начинаем транзакцию
             transaction = session.beginTransaction();
-
-            // Сохранение книги в базе
             session.save(book);
-
-            // Подтверждаем транзакцию
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                // Если ошибка, откатываем транзакцию
+            if (transaction != null)
                 transaction.rollback();
-            }
             e.printStackTrace();
         } finally {
-            // Закрываем сессию
             session.close();
         }
     }

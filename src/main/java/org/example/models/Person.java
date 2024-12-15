@@ -1,13 +1,13 @@
 package org.example.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public class Person {
-    @Getter @Setter String full_name;
-    @Getter @Setter String email;
-    @Getter @Setter String phone_number;
+    String full_name;
+    String email;
+    String phone_number;
+    String sha256_password;
 }
