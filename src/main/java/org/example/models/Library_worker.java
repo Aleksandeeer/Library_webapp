@@ -7,10 +7,20 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
+@Getter
+@Setter
 @Entity
 public class Library_worker extends Person {
-    @Getter @Id @GeneratedValue(strategy = GenerationType.IDENTITY) int id;
-    @Getter @Setter String role;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) int id;
+    Date registration_date;
+    String login;
+    boolean membership_status;
+    String full_name;
+    String email;
+    String phone_number;
+    String sha256_password;
 
     public Library_worker() {
 

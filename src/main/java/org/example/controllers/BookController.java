@@ -1,12 +1,15 @@
 package org.example.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.models.Book;
+import org.example.models.Member;
+import org.example.models.Person;
 import org.example.services.Service;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,17 +21,18 @@ public class BookController {
         this.service = new Service(); // Создание сервиса
     }
 
-    // TODO: пока перенаправление на книги, потом исправить
-    // Главная страница, которая будет перенаправлять на /books
+    // Главная страница, которая будет перенаправлять на /login
     @GetMapping("/")
-    public String redirectToBooks() {
-        return "redirect:/books";
+    public String Main_page_function(Model model, HttpServletRequest request) {
+        return "login";
     }
 
     // Страница с книгами
     @GetMapping("/books")
     public String showBooks(Model model) {
         List<Book> books = service.getBooks();
+        // TODO: сделать проверку на роль в кнопке "добавить книгу"
+        model.addAttribute("role", service.getRole());
         model.addAttribute("books", books);
         return "books";
     }
@@ -60,5 +64,43 @@ public class BookController {
 
         // Перенаправляем на страницу со списком книг или другую страницу
         return "redirect:/books";
+    }
+
+    @PostMapping("/login")
+    // TODO: не упаковывается в Person
+    public String login(Model model, Person person) {
+        if (service.isUserValid(person)) {
+            // ? 0 - Гость, 1 - Читатель, 2 - Работник
+            System.out.println("ROLE: " + service.getRole());
+            person.setRole(service.getRole());
+
+            model.addAttribute("role", service.getRole());
+            model.addAttribute("person", person);
+            model.addAttribute("books", service.getBooks());
+
+            return "redirect:/books";
+        } else {
+            return "login";
+        }
+    }
+
+    @PostMapping("/guest")
+    public String guest(Model model) {
+        service.setRole(0); // ? Гость
+        return "redirect:/books";
+    }
+
+    @PostMapping("/registration")
+    public String registration_page() {
+        return "registration";
+    }
+
+    // TODO: не заходит почему-то в метод
+    @PostMapping("/registr")
+    public String registration(Model model, Member member) {
+        System.out.println("preregistration");
+        service.registration_new_member(member);
+        System.out.println("registration_successful");
+        return "redirect:/login";
     }
 }

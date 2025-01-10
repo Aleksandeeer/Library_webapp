@@ -7,9 +7,9 @@
         <!-- PostgreSQL: URL, пользователь и пароль -->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 
-        <property name="hibernate.connection.url">your_url</property>
-        <property name="hibernate.connection.username">your_username</property>
-        <property name="hibernate.connection.password">your_password</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://[::1]:5432/postgres</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">cricut760</property>
 
         <!-- Диалект Hibernate для PostgreSQL -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -21,7 +21,7 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
-        <!-- Маппинги для классов -->
+        <!-- Маппинги таблиц для классов -->
         <mapping class="org.example.models.Book"/>
         <mapping class="org.example.models.Loan"/>
         <mapping class="org.example.models.Member"/>
