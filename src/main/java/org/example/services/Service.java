@@ -9,6 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -18,7 +21,8 @@ public class Service {
     List<Member> members;
     List<Library_worker> library_workers;
     List<Loan> loans;
-    @Getter @Setter
+    @Getter
+    @Setter
     int role = 0; // ? 0 - Гость, 1 - Читатель, 2 - Работник
 
     Session session;
@@ -90,6 +94,10 @@ public class Service {
     public void registration_new_member(Member member) {
         member.setSha256_password(hashing_password(member.getSha256_password()));
         member.setRole(1);
+        member.setId(members.get(members.size() - 1).getId() + 1);
+        // ? Текущее время до миллисекунд
+        // TODO: проверить
+        member.setRegistration_date(new Date());
 
         members.add(member);
 
@@ -115,4 +123,7 @@ public class Service {
                 .toString();
     }
 
+    public Member get_last_member() {
+        return members.get(members.size() - 1);
+    }
 }

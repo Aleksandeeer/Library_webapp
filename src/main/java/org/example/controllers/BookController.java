@@ -95,12 +95,10 @@ public class BookController {
         return "registration";
     }
 
-    // TODO: не заходит почему-то в метод
-    @PostMapping("/registr")
+    @PostMapping("/register")
     public String registration(Model model, Member member) {
-        System.out.println("preregistration");
         service.registration_new_member(member);
-        System.out.println("registration_successful");
-        return "redirect:/login";
+        member = service.get_last_member();
+        return login(model, member);
     }
 }
