@@ -4,13 +4,14 @@ import com.google.common.hash.Hashing;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.components.HibernateUtil;
+import org.example.controllers.BookRepositoryImpl;
+import org.example.controllers.MemberRepositoryImpl;
+import org.example.interfaces.BookRepository;
 import org.example.models.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class Service {
     List<Member> members;
     List<Library_worker> library_workers;
     List<Loan> loans;
+    BookRepositoryImpl bookRepository;
+    MemberRepositoryImpl memberRepository;
     @Getter
     @Setter
     int role = 0; // ? 0 - Гость, 1 - Читатель, 2 - Работник
@@ -29,11 +32,15 @@ public class Service {
 
     public Service() {
         session = HibernateUtil.getSessionFactory().openSession();
+        // ! Repository
+        bookRepository = new BookRepositoryImpl();
+        memberRepository = new MemberRepositoryImpl();
 
         try {
-            // Выгрузки данных из таблиц
-            books = session.createQuery("FROM Book", Book.class).list();
-            members = session.createQuery("FROM Member", Member.class).list();
+            // ! Repository pattern
+            books = bookRepository.getAllBooks();
+            members = memberRepository.getAllMembers();
+
             library_workers = session.createQuery("FROM Library_worker", Library_worker.class).list();
             loans = session.createQuery("FROM Loan", Loan.class).list();
         } catch (Exception e) {
@@ -46,28 +53,15 @@ public class Service {
 
     public void addBook(Book book) {
         books.add(book);
-
-        session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-
-        try {
-            transaction = session.beginTransaction();
-            session.save(book);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+        // ! Repository pattern
+        bookRepository.addBook(book);
     }
 
     public boolean isUserValid(Person person) {
         // ? SHA-256 encryption
-        System.out.println("LOGIN:" + person.getLogin() + "\tPASSWORD:" + person.getSha256_password());
+//        System.out.println("LOGIN:" + person.getLogin() + "\tPASSWORD:" + person.getSha256_password());
         person.setSha256_password(hashing_password(person.getSha256_password()));
-        System.out.println("SHA256: " + person.getSha256_password());
+//        System.out.println("SHA256: " + person.getSha256_password());
 
         for (Member member : members) {
             if (member.getLogin().equals(person.getLogin()) &&
@@ -100,21 +94,8 @@ public class Service {
         member.setRegistration_date(new Date());
 
         members.add(member);
-
-        session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-
-        try {
-            transaction = session.beginTransaction();
-            session.save(member);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+        // ! Repository pattern
+        memberRepository.addMember(member);
     }
 
     public String hashing_password(String unhashing_password) {
