@@ -45,6 +45,7 @@ public class BookController {
             @RequestParam(name = "publicationYear") int publicationYear,
             @RequestParam(name = "ISBN") String ISBN,
             @RequestParam(name = "availabilityStatus") boolean availabilityStatus,
+            @RequestParam(name = "URL") String URL,
             Model model) {
 
         // Преобразуем строку genre в перечисление Genre
@@ -53,6 +54,7 @@ public class BookController {
         // Создаем новый объект книги
         Book book = new Book();
         book.setTitle(title);
+        book.setURL(URL);
         book.setAuthor(author);
         book.setGenre(bookGenre);
         book.setPublication_year(publicationYear);

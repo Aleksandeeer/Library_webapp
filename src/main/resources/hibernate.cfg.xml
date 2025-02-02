@@ -9,7 +9,7 @@
 
         <property name="hibernate.connection.url">jdbc:postgresql://[::1]:5432/postgres</property>
         <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">cricut760</property>
+        <property name="hibernate.connection.password">123</property>
 
         <!-- Диалект Hibernate для PostgreSQL -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>

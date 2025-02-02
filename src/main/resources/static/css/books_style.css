@@ -94,3 +94,56 @@ p {
         width: 100%;
     }
 }
+         body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #FEFFC0;
+                }
+
+                .book-grid {
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    gap: 20px;
+                    padding: 20px;
+                    position: relative;
+                }
+
+                .shelf {
+                    grid-column: span 5;
+                    height: 10px;
+                    background-color: #c2b280;
+                    margin: -10px 0 20px;
+                    border-radius: 5px;
+                }
+
+                .book-item {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    text-align: center;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    background-color: #fff;
+                }
+
+                .book-item img {
+                    width: 100%;
+                    height: auto;
+                    max-height: 200px;
+                    object-fit: cover;
+                }
+
+                .book-item h3 {
+                    margin: 10px 0;
+                    font-size: 16px;
+                    color: #333;
+                }
+
+                .book-item p {
+                    margin: 5px 0;
+                    font-size: 14px;
+                    color: #555;
+                }

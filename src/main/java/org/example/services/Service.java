@@ -6,10 +6,8 @@ import lombok.Setter;
 import org.example.components.HibernateUtil;
 import org.example.controllers.BookRepositoryImpl;
 import org.example.controllers.MemberRepositoryImpl;
-import org.example.interfaces.BookRepository;
 import org.example.models.*;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

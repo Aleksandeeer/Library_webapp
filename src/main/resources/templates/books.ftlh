@@ -7,32 +7,19 @@
 <#if books?size == 0>
     <p>Книги отсутствуют</p>
 <#else>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Автор</th>
-                <th>Год</th>
-                <th>ISBN</th>
-                <th>Доступно</th>
-                <th>Жанр</th>
-            </tr>
-        </thead>
-        <tbody>
-        <#list books as book>
-            <tr>
-                <td>${book.id}</td>
-                <td>${book.title}</td>
-                <td>${book.author}</td>
-                <td>${book.publication_year}</td>
-                <td>${book.ISBN}</td>
-                <td>${book.availabilityStatus?string('Yes', 'No')}</td>
-                <td>${book.genre}</td>
-            </tr>
-        </#list>
-        </tbody>
-    </table>
+     <div class="book-grid">
+            <#list books as book>
+
+                <div class="book-item">
+                    <img src="${book.URL}" alt="Обложка книги ${book.title}">
+                    <h3>${book.title}</h3>
+                    <p>${book.author}</p>
+                </div>
+                <#if book?index % 4 == 0 && book?index != 0>
+                    <div class="shelf"></div>
+                </#if>
+            </#list>
+        </div>
 </#if>
 
 <#if role == 2>
@@ -60,6 +47,9 @@
 
         <label for="ISBN">ISBN:</label>
         <input type="text" id="ISBN" name="ISBN" required>
+
+        <label for="URL">URL:</label>
+        <input type="text" id="URL" name="URL" required>
 
         <label for="availabilityStatus">Статус доступности:</label>
         <select id="availabilityStatus" name="availabilityStatus">

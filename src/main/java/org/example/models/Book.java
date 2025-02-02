@@ -14,6 +14,7 @@ public class Book {
     String author;
     Genre genre;
     String title;
+    String URL;
     int publication_year;
     /// ISBN
     /// 111-5-22222-333-4
@@ -25,13 +26,14 @@ public class Book {
         FANTASY, ACTION, COMEDY, DRAMA, DETECTIVE, NOVEL, SCIENCE, TUTORIAL
     }
 
-    public Book(String author, String title, Genre genre, int publication_year, String ISBN, boolean availabilityStatus) {
+    public Book(String author, String title, Genre genre, int publication_year, String ISBN, boolean availabilityStatus, String url) {
         this.author = author;
         this.genre = genre;
         this.publication_year = publication_year;
         this.ISBN = ISBN;
         this.availabilityStatus = availabilityStatus;
         this.title = title;
+        this.URL = url;
     }
 
     public Book() {
