@@ -15,6 +15,7 @@ public class Book {
     Genre genre;
     String title;
     String URL;
+    String URL_author;
     int publication_year;
     /// ISBN
     /// 111-5-22222-333-4

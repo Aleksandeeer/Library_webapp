@@ -11,9 +11,13 @@
             <#list books as book>
 
                 <div class="book-item">
-                    <img src="${book.URL}" alt="Обложка книги ${book.title}">
+                    <div class="book-image-container">
+                        <img src="${book.URL}" alt="Обложка книги ${book.title}">
+                    </div>
                     <h3>${book.title}</h3>
-                    <p>${book.author}</p>
+                    <p>
+                        <a href="${book.URL_author}">${book.author}</a>
+                    </p>
                 </div>
                 <#if book?index % 4 == 0 && book?index != 0>
                     <div class="shelf"></div>
@@ -29,6 +33,9 @@
 
         <label for="author">Автор:</label>
         <input type="text" id="author" name="author" required>
+
+        <label for"URL_author">Ссылка на автора:</label>
+        <input type="text" id="URL_author" name="URL_author" required>
 
         <label for="genre">Жанр:</label>
         <select id="genre" name="genre">

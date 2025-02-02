@@ -50,6 +50,7 @@ public class BookController {
             @RequestParam(name = "ISBN") String ISBN,
             @RequestParam(name = "availabilityStatus") boolean availabilityStatus,
             @RequestParam(name = "URL") String URL,
+            @RequestParam(name = "URL_author") String URL_author,
             Model model) {
 
         // Преобразуем строку genre в перечисление Genre
@@ -60,6 +61,7 @@ public class BookController {
         book.setTitle(title);
         book.setURL(URL);
         book.setAuthor(author);
+        book.setURL_author(URL_author);
         book.setGenre(bookGenre);
         book.setPublication_year(publicationYear);
         book.setISBN(ISBN);

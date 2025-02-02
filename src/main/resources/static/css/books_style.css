@@ -147,3 +147,13 @@ p {
                     font-size: 14px;
                     color: #555;
                 }
+
+
+.book-image-container {
+    width: 150px; /* Задайте нужную ширину квадрата */
+    height: 150px; /* Задайте нужную высоту квадрата */
+    overflow: hidden; /* Обрезаем лишнее */
+    display: flex;    /* Используем flexbox для центрирования */
+    justify-content: center; /* Центрируем горизонтально */
+    align-items: center;  /* Центрируем вертикально */
+}
