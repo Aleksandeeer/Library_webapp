@@ -6,8 +6,10 @@ import lombok.Setter;
 import org.example.components.HibernateUtil;
 import org.example.controllers.BookRepositoryImpl;
 import org.example.controllers.MemberRepositoryImpl;
+import org.example.controllers.WorkerRepositoryImpl;
 import org.example.models.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -20,8 +22,11 @@ public class Service {
     List<Member> members;
     List<Library_worker> library_workers;
     List<Loan> loans;
+    List<Admin> admins;
     BookRepositoryImpl bookRepository;
     MemberRepositoryImpl memberRepository;
+    WorkerRepositoryImpl workerRepository;
+
     @Getter
     @Setter
     int role = 0; // ? 0 - Гость, 1 - Читатель, 2 - Работник
@@ -30,17 +35,22 @@ public class Service {
 
     public Service() {
         session = HibernateUtil.getSessionFactory().openSession();
+
         // ! Repository
         bookRepository = new BookRepositoryImpl();
         memberRepository = new MemberRepositoryImpl();
+        workerRepository = new WorkerRepositoryImpl();
 
         try {
             // ! Repository pattern
             books = bookRepository.getAllBooks();
             members = memberRepository.getAllMembers();
+            library_workers = workerRepository.getAllWorkers();
 
-            library_workers = session.createQuery("FROM Library_worker", Library_worker.class).list();
+            // TODO: сделать Loans и LoansRepository + LoansRepositoryImpl
             loans = session.createQuery("FROM Loan", Loan.class).list();
+
+            admins = session.createQuery("FROM Admin", Admin.class).list();
         } catch (Exception e) {
             System.out.println("Ошибка при обработке данных таблицы.");
             e.printStackTrace();
@@ -55,11 +65,15 @@ public class Service {
         bookRepository.addBook(book);
     }
 
+    public void addWorker(Library_worker worker) {
+        library_workers.add(worker);
+        // ! Repository pattern
+        workerRepository.addWorker(worker);
+    }
+
     public boolean isUserValid(Person person) {
         // ? SHA-256 encryption
-//        System.out.println("LOGIN:" + person.getLogin() + "\tPASSWORD:" + person.getSha256_password());
         person.setSha256_password(hashing_password(person.getSha256_password()));
-//        System.out.println("SHA256: " + person.getSha256_password());
 
         for (Member member : members) {
             if (member.getLogin().equals(person.getLogin()) &&
@@ -75,6 +89,15 @@ public class Service {
                     library_worker.getSha256_password().equals(person.getSha256_password())) {
                 role = 2; // ? Работник
                 System.out.println("РАБОТНИК");
+                return true;
+            }
+        }
+
+        for (Admin admin : admins) {
+            if (admin.getLogin().equals(person.getLogin()) &&
+                    admin.getSha256_password().equals(person.getSha256_password())) {
+                role = 3; // ? АДМИН
+                System.out.println("АДМИН");
                 return true;
             }
         }
@@ -105,4 +128,6 @@ public class Service {
     public Member get_last_member() {
         return members.get(members.size() - 1);
     }
+
+    public Library_worker get_last_worker() { return library_workers.get(library_workers.size() - 1); }
 }

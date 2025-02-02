@@ -9,9 +9,9 @@ public class App
 {
     public static void main( String[] args )
     {
-        Service service = new Service();
-        System.out.println(service
-                .hashing_password("123"));
+//        Service service = new Service();
+//        System.out.println(service
+//                .hashing_password("admin"));
         SpringApplication.run(App.class, args);
     }
 }

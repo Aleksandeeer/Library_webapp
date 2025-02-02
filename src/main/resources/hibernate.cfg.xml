@@ -8,8 +8,8 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 
         <property name="hibernate.connection.url">jdbc:postgresql://[::1]:5432/postgres</property>
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">123</property>
+        <property name="hibernate.connection.username">your_login</property>
+        <property name="hibernate.connection.password">your_password</property>
 
         <!-- Диалект Hibernate для PostgreSQL -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -26,5 +26,6 @@
         <mapping class="org.example.models.Loan"/>
         <mapping class="org.example.models.Member"/>
         <mapping class="org.example.models.Library_worker"/>
+        <mapping class="org.example.models.Admin"/>
     </session-factory>
 </hibernate-configuration>

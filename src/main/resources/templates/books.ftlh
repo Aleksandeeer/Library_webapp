@@ -61,6 +61,37 @@
     </form>
 </#if>
 
+<#if role == 3>
+    <form action="/addLibraryWorker" method="POST">
+        <label for="full_name">ФИО:</label>
+        <input type="text" id="full_name" name="full_name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone_number">Телефон:</label>
+        <input type="text" id="phone_number" name="phone_number" required>
+
+        <label for="registration_date">Дата регистрации:</label>
+        <input type="date" id="registration_date" name="registration_date" required>
+
+        <label for="login">Логин:</label>
+        <input type="text" id="login" name="login" required>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="sha256_password" name="sha256_password" required>
+
+        <label for="membership_status">Статус членства:</label>
+        <select id="membership_status" name="membership_status">
+            <option value="true">Активный</option>
+            <option value="false">Неактивный</option>
+        </select>
+
+        <button type="submit">Добавить работника</button>
+    </form>
+</#if>
+
+
 <#if role == 0>
     <form action="/registration" method="POST">
         <input type="submit" value="Регистрация"/>

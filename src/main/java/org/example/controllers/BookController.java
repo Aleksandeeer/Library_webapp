@@ -2,6 +2,7 @@ package org.example.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.models.Book;
+import org.example.models.Library_worker;
 import org.example.models.Member;
 import org.example.models.Person;
 import org.example.services.Service;
@@ -11,10 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
 import java.util.List;
 
 @Controller
 public class BookController {
+//    String dateTimeString_ex = "2023-10-27 14:35:12";
+    String pattern1 = "yyyy-MM-dd HH:mm:ss";
     private final Service service;
 
     public BookController() {
@@ -102,5 +106,29 @@ public class BookController {
         service.registration_new_member(member);
         member = service.get_last_member();
         return login(model, member);
+    }
+
+    @PostMapping("/addLibraryWorker")
+    public String add_lib_worker(Model model,
+                                 @RequestParam(name = "full_name") String full_name,
+                                 @RequestParam(name = "email") String email,
+                                 @RequestParam(name = "phone_number") String phone_number,
+                                 @RequestParam(name = "registration_date") String registration_date,
+                                 @RequestParam(name = "login") String login,
+                                 @RequestParam(name = "sha256_password") String sha256_password,
+                                 @RequestParam(name = "membership_status") boolean membership_status) {
+        Library_worker library_worker = new Library_worker();
+        library_worker.setId(service.get_last_worker().getId() + 1);
+        library_worker.setEmail(email);
+        library_worker.setFull_name(full_name);
+        library_worker.setRegistration_date(Date.valueOf(registration_date));
+        library_worker.setSha256_password(service.hashing_password(sha256_password));
+        library_worker.setPhone_number(phone_number);
+        library_worker.setLogin(login);
+        library_worker.setMembership_status(membership_status);
+
+        service.addWorker(library_worker);
+
+        return "redirect:/books";
     }
 }
