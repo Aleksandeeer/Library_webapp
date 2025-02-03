@@ -1,8 +1,50 @@
 <head>
     <title>Books</title>
     <link rel="stylesheet" href="../css/books_style.css">
+
+    <script src="../js/search.js"></script>
+    <script src="../js/filter.js"></script>
 </head>
 <body>
+
+<!-- Скрытые данные для фильтров -->
+<div id="authors-data" style="display: none;">
+    <#list books?map(book -> book.author)?sort as author>
+        <span>${author}</span>
+    </#list>
+</div>
+
+<div id="genres-data" style="display: none;">
+    <#list books?map(book -> book.genre)?sort as genre>
+        <span>${genre}</span>
+    </#list>
+</div>
+
+<div id="years-data" style="display: none;">
+    <#list books?map(book -> book.publication_year)?sort as publication_year>
+        <span>${publication_year}</span>
+    </#list>
+</div>
+
+
+
+<div class="search-container">
+    <input type="text" id="book-search" placeholder="Поиск книг...">
+</div>
+
+<div class="filters-container">
+    <select id="year-filter">
+        <option value="">Все годы</option>
+    </select>
+
+    <select id="genre-filter">
+        <option value="">Все жанры</option>
+    </select>
+
+    <select id="author-filter">
+        <option value="">Все авторы</option>
+    </select>
+</div>
 
 <#if books?size == 0>
     <p>Книги отсутствуют</p>
