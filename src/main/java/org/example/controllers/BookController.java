@@ -38,6 +38,12 @@ public class BookController {
         // TODO: сделать проверку на роль в кнопке "добавить книгу"
         model.addAttribute("role", service.getRole());
         model.addAttribute("books", books);
+
+//        for (int i = 0; i < books.size(); i++) {
+//            System.out.println("book_url = " + books.get(i).getURL());
+//            System.out.println("Auth_ur = " + books.get(i).getURL_author() + "\n");
+//
+//        }
         return "books";
     }
 

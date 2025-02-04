@@ -26,8 +26,8 @@ public class Service {
     MemberRepositoryImpl memberRepository;
     WorkerRepositoryImpl workerRepository;
 
-    @Getter
     @Setter
+    @Getter
     int role = 0; // ? 0 - Гость, 1 - Читатель, 2 - Работник
 
     Session session;

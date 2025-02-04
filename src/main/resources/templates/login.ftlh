@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="../css/login_style.css">
 
 </head>
-<body>
 
+<body>
 <div class="main">
     <form action="/login" method="post">
         Имя пользователя: <label>
@@ -29,8 +29,6 @@
 <form action="/guest" method="post">
 <input type="submit" value="Войти как гость"/>
 </div>
-
-
 
 </body>
 </html>
