@@ -9,7 +9,6 @@ import org.example.controllers.MemberRepositoryImpl;
 import org.example.controllers.WorkerRepositoryImpl;
 import org.example.models.*;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

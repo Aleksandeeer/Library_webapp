@@ -7,6 +7,8 @@
 </head>
 <body>
 
+
+
 <!-- Скрытые данные для фильтров -->
 <div id="authors-data" style="display: none;">
     <#list books?map(book -> book.author)?sort as author>
@@ -26,10 +28,8 @@
     </#list>
 </div>
 
-
-
 <div class="search-container">
-    <input type="text" id="book-search" placeholder="Поиск книг...">
+    <input type="text" id="book-search" class="book-search" placeholder="Поиск книг...">
 </div>
 
 <div class="filters-container">
@@ -49,23 +49,20 @@
 <#if books?size == 0>
     <p>Книги отсутствуют</p>
 <#else>
-     <div class="book-grid">
-            <#list books as book>
-
-                <div class="book-item">
-                    <div class="book-image-container">
-                        <img src="${book.URL}" alt="Обложка книги ${book.title}">
-                    </div>
-                    <h3>${book.title}</h3>
-                    <p>
-                        <a href="${book.URL_author}">${book.author}</a>
-                    </p>
-                </div>
-                <#if book?index % 4 == 0 && book?index != 0>
-                    <div class="shelf"></div>
-                </#if>
-            </#list>
-        </div>
+     <div class="book-grid" id="book-container">
+         <#list books as book>
+             <div class="book-item"
+                  data-year="${book.publication_year}"
+                  data-genre="${book.genre}"
+                  data-author="${book.author}">
+                 <div class="book-image-container">
+                     <img src="${book.URL}" alt="Обложка книги ${book.title}">
+                 </div>
+                 <h3 class="book-title" style="color:black">${book.title}</h3>
+                 <p><a href="${book.URL_author}" class="book-author">${book.author}</a></p>
+             </div>
+         </#list>
+     </div>
 </#if>
 
 <#if role == 2>
@@ -76,7 +73,7 @@
         <label for="author">Автор:</label>
         <input type="text" id="author" name="author" required>
 
-        <label for"URL_author">Ссылка на автора:</label>
+        <label for="URL_author">Ссылка на автора:</label>
         <input type="text" id="URL_author" name="URL_author" required>
 
         <label for="genre">Жанр:</label>
