@@ -6,16 +6,16 @@ import org.example.models.Library_worker;
 import org.example.models.Member;
 import org.example.models.Person;
 import org.example.services.Service;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.util.List;
 
-@Controller
+@RestController
 public class BookController {
 //    String dateTimeString_ex = "2023-10-27 14:35:12";
     String pattern1 = "yyyy-MM-dd HH:mm:ss";
@@ -38,12 +38,6 @@ public class BookController {
         // TODO: сделать проверку на роль в кнопке "добавить книгу"
         model.addAttribute("role", service.getRole());
         model.addAttribute("books", books);
-
-//        for (int i = 0; i < books.size(); i++) {
-//            System.out.println("book_url = " + books.get(i).getURL());
-//            System.out.println("Auth_ur = " + books.get(i).getURL_author() + "\n");
-//
-//        }
         return "books";
     }
 
